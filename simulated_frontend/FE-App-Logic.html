@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> Test App logic Login</title>
+    <!-- This file was created to test the back end for the first
+    sprint of the project -->
+    <!--It uses the URL http://127.0.0.1:47600/ to comunicate with 
+    the server->
+    <!--So far and agreed with the server the information will be 
+    passed as part of the URL query and will have the format: 
+    ?username=xxx&password=yyy-->
+    <!--No path will be used for the URL. I.e. the total URL 
+    request format will be of the format: 
+    http://127.0.0.1:47600/?username=xxx&password=yyy-->
+</head>
+
+<body>
+    <!--The input tag presents on the page a field able to receive data from the user-->
+    <!--The type attribute is relevant to specify that it is a format for data with the format of a text-->
+    <div>
+        <label for="inputuser">Nombre del usuario: </label>
+        <input type="text" id="inputuser" placeholder="usuario" size="30" required>
+    </div>
+    <!--The input tag presents on the page a field able to receive data from the user-->
+    <!--The type attribute is relevant to specify that it is a format for data with the format of a password-->
+    <div>
+        <label for="inputpassword">Contraseña:</label>
+        <input type="password" id="inputpassword" placeholder="contraseña" minlength="4" maxlength="8" size="8" required>
+    </div>
+    <!--the onclick attribute calls to the JavaScript function-->
+    <!--The JavaScript function will be called just and just when the button is clicked-->
+    <div>
+        <button onclick="loadSprint()">Autenticar</button>
+    </div>
+    <!--this div is in order to be able to manage the return from the total fetch block as-->
+    <!-- you will se that the id is used inside the block-->
+    <div id="output"></div>
+
+    <script>
+        function loadSprint() {
+            /*The data introduced is catched using the id of the input tag*/
+            var username = document.getElementById("inputuser").value
+            var password = document.getElementById("inputpassword").value
+            /*This console.log will show the result on the 
+            developer tool from the browser on the label console*/
+            console.log("the user is: " + username)
+            console.log("the password is: " + password)
+
+            /*The metode then is in order to indicate what we would like to execute after the search*/
+            fetch("http://127.0.0.1:47600/login/?username=" + username + "&password=" + password).then(
+                    function(response) { // response is the promissed resukt of the http messsage
+                        console.log("response status = " + response.status);
+                        if (response.status >= 200 || response.status < 300) {
+                            fetch("http://127.0.0.1:47600/userdata/?username=" + username).then(
+                                function(response2) {
+                                    console.log("response2 ");
+                                })
+                        }
+                    })
+        }
+    </script>
+
+
+
+</body>
+
+</html>
